@@ -1,67 +1,80 @@
+
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Number Input Form</title>
-  </head>
-  <body>
-    <div style="text-align: center; margin-top: 20px">
-      <h2>Check Profit</h2>
-      <form id="numberForm">
-        <label for="num1">Proboo:</label>
-        <input
-          type="number"
-          step="0.01"
-          id="num1"
-          placeholder="e.g., 1.2, 4.8"
-          required
-        /><br /><br />
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Check Profit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
 
-        <label for="num2">Guruu:</label>
-        <input type="number" id="num2" placeholder="e.g., 120, 540" required /><br /><br />
+        h2 {
+            font-size: 24px;
+        }
 
-        <label for="num3">Max Profit:</label>
-        <input
-          type="number"
-          value="3000"
-          id="num3"
-          placeholder="Enter a number"
-          required
-        /><br /><br />
+        form {
+            margin: 0 auto;
+            max-width: 300px;
+        }
 
-        <button
-          type="button"
-          id="calculateButton"
-          style="
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+            font-size: 16px;
+        }
+
+        button {
             background-color: #4caf50;
             color: white;
             padding: 10px 20px;
             border: none;
             cursor: pointer;
-          "
-        >
-          Submit
-        </button>
+            font-size: 16px;
+            margin-top: 10px;
+        }
 
-        <button
-          type="button"
-          id="clearButton"
-          style="
+        #clearButton {
             background-color: #f44336;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-          "
-        >
-          Clear
-        </button>
-      </form>
+        }
 
-      <div id="result" style="font-size: 20px; margin-top: 20px"></div>
-    </div>
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Check Profit</h2>
+    <form id="numberForm">
+        <label for="num1">Proboo:</label>
+        <input type="number" step="0.01" id="num1" placeholder="e.g., 1.2, 4.8" required><br><br>
+
+        <label for="num2">Guruu:</label>
+        <input type="number" id="num2" placeholder="e.g., 120, 540" required><br><br>
+
+        <label for="num3">Max Profit:</label>
+        <input type="number" value="3000" id="num3" placeholder="Enter a number" required><br><br>
+
+        <button type="button" id="calculateButton">Submit</button>
+
+        <button type="button" id="clearButton">Clear</button>
+    </form>
+
+    <div id="result"></div>
 
     <script>
-      document.getElementById('calculateButton').addEventListener('click', function () {
+        document.getElementById('calculateButton').addEventListener('click', function () {
         const r = parseFloat(document.getElementById('num1').value);
         const p2return = parseFloat(document.getElementById('num2').value);
         const profit_wanna = parseFloat(document.getElementById('num3').value);
@@ -111,5 +124,5 @@
         document.getElementById('result').innerHTML = '';
       });
     </script>
-  </body>
+</body>
 </html>
