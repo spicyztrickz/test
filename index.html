@@ -65,8 +65,8 @@
             display: none;
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
-            margin-left: auto;
-            margin-right: auto;
+           margin-left: auto;
+  margin-right: auto;
             width: 100%;
         }
 
@@ -95,79 +95,69 @@
         #result {
             color: #f44336;
         }
+      .header{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+      }
+      .toggle{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+      }
+      .container {
+        margin-left:5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 10vh;
+}
+.toggle-btn,.toggle-btn0 {
+      width: 30px;
+      height: 10px;
+      background-color: gray;
+      border-radius: 30px;
+      padding: 5px;
+  margin-left:5px;
+      transition: all .3s ease-in-out;
+}
+.toggle-btn > .inner-circle,.toggle-btn0 > .inner-circle {
+      width: 10px;
+      height: 10px;
+      background-color: #fff;
+      border-radius: 50%;
+      transition: all 300ms ease-in-out;
+}
+.toggle-btn.active {
+      background-color: #f44336;
+}
+      .toggle-btn0.active {
+      background-color: #4caf50;
+}
+.toggle-btn.active > .inner-circle,.toggle-btn0.active > .inner-circle {
+      margin-left: 20px;
+}
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .container {
-            margin-left: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 10vh;
-        }
-
-        .toggle-btn,
-        .toggle-btn0 {
-            width: 30px;
-            height: 10px;
-            background-color: gray;
-            border-radius: 30px;
-            padding: 5px;
-            margin-left: 5px;
-            transition: all .3s ease-in-out;
-        }
-
-        .toggle-btn>.inner-circle,
-        .toggle-btn0>.inner-circle {
-            width: 10px;
-            height: 10px;
-            background-color: #fff;
-            border-radius: 50%;
-            transition: all 300ms ease-in-out;
-        }
-
-        .toggle-btn.active {
-            background-color: #f44336;
-        }
-
-        .toggle-btn0.active {
-            background-color: #4caf50;
-        }
-
-        .toggle-btn.active>.inner-circle,
-        .toggle-btn0.active>.inner-circle {
-            margin-left: 20px;
-        }
     </style>
 </head>
 
 <body>
-    <div class='header'>
-        <h2>Check Profit</h2>
-        <div class='toggle'>
-            <div class="container">
-                <p>100k</p>
-                <div class="toggle-btn0">
-                    <div class="inner-circle"></div>
-                </div>
-            </div>
-            <div class="container">
-                <p>TDS</p>
-                <div class="toggle-btn">
-                    <div class="inner-circle"></div>
-                </div>
-            </div>
-        </div>
+  <div class='header'>
+    <h2>Check Profit</h2>
+    <div class='toggle'>
+      <div class="container">
+   <p>100k</p>
+    <div class="toggle-btn0">
+        <div class="inner-circle"></div>
+    </div>
+</div>
+  <div class="container">
+   <p>TDS</p>
+    <div class="toggle-btn">
+        <div class="inner-circle"></div>
+    </div>
+</div>
+      </div>
     </div>
     <form id="numberForm">
         <div class='form-input'>
@@ -195,42 +185,42 @@
     </table>
 
     <script>
-        let $ = document;
-        const tdsbtn = $.querySelector(".toggle-btn");
-        tdsbtn.addEventListener("click", () => {
-            document.getElementById("myTable").style.display = 'none';
+      let $ = document;
+const tdsbtn = $.querySelector(".toggle-btn");
+tdsbtn.addEventListener("click", () => {
+   document.getElementById("myTable").style.display = 'none';
             document.getElementById('num1').value = '';
             document.getElementById('num2').value = '';
             document.getElementById('result').innerHTML = '';
             document.getElementById('outcome').innerHTML = '';
             document.getElementById('myTable').getElementsByTagName('tbody')[0].innerHTML = '';
-            tdsbtn.classList.toggle("active");
-
-        });
-        const btn = $.querySelector(".toggle-btn0");
-        btn.addEventListener("click", () => {
-            document.getElementById("myTable").style.display = 'none';
+      tdsbtn.classList.toggle("active");
+  
+});
+      const btn = $.querySelector(".toggle-btn0");
+btn.addEventListener("click", () => {
+   document.getElementById("myTable").style.display = 'none';
             document.getElementById('num1').value = '';
             document.getElementById('num2').value = '';
             document.getElementById('result').innerHTML = '';
             document.getElementById('outcome').innerHTML = '';
             document.getElementById('myTable').getElementsByTagName('tbody')[0].innerHTML = '';
-            btn.classList.toggle("active");
-
-        });
+      btn.classList.toggle("active");
+  
+});
 
         document.getElementById('calculateButton').addEventListener('click', function () {
             const r = parseFloat(document.getElementById('num1').value);
             const p2return = parseFloat(document.getElementById('num2').value);
             const profit_wanna = parseFloat(document.getElementById('num3').value);
             var q = 1000;
-            var c = 0.85;
-            let tds = 1;
-            if (tdsbtn.classList.length === 2 && tdsbtn.classList[1] === 'active') {
-                tds = 0.70;
-            }
-            function cal_p1_return(r, q) {
-                const p = (10 - r) * q * c * tds;
+            var commission = 0.85;
+          let tds=1;
+          if(tdsbtn.classList.length===2 && tdsbtn.classList[1]==='active'){
+              tds=0.70;
+          }
+            function cal_p1_return(rate, quantity) {
+                const p = (10 - rate) * quantity * commission * tds;
                 return p;
             }
             function cal_p2_return(p2return, amt) {
@@ -239,16 +229,16 @@
             let k = 0;
             let maxPP = -100000;
             let maxLP = -100000;
-            let amtRange = 50000;
-            let qtyRange = 10000;
-            if (btn.classList.length === 2 && btn.classList[1] === 'active') {
-                amtRange = 100000;
-                qtyRange = 20000;
-            }
+          let amtRange=50000;
+          let qtyRange=10000;
+           if(btn.classList.length===2 && btn.classList[1]==='active'){
+              amtRange=100000;
+             qtyRange=20000;
+          }
             // Clear the existing result content
-            document.getElementById("myTable").style.display = 'none';
+          document.getElementById("myTable").style.display = 'none';
             document.getElementById('result').innerHTML = '';
-            document.getElementById('outcome').innerHTML = '';
+          document.getElementById('outcome').innerHTML = '';
             document.getElementById('myTable').getElementsByTagName('tbody')[0].innerHTML = ''
             for (let amt = 1000; amt <= amtRange; amt = amt + 500) {
                 let pp1 = 0;
@@ -262,8 +252,8 @@
                 for (let qty = 1000; qty <= qtyRange; qty = qty + 500) {
                     pl1 = qty * r;
                     pp1 = cal_p1_return(r, qty);
-                    profitQ = parseInt(pp2 - pl1);
-                    profitA = parseInt(pp1 - pl2);
+                    profitA = parseInt(pp2 - pl1);
+                    profitQ = parseInt(pp1 - pl2);
 
                     if (profitQ >= profit_wanna && profitA >= profit_wanna) {
                         k = k + 1;
