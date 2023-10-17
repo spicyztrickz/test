@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Check Profit</title>
@@ -17,7 +17,7 @@
 
         form {
             margin: 0 auto;
-            max-width: 300px;
+
         }
 
         label {
@@ -52,77 +52,164 @@
             font-size: 18px;
             margin-top: 20px;
         }
+
+        .form-input {
+            display: flex;
+        }
+
+        #outcome {
+            color: #4caf50;
+        }
+
+        #myTable {
+            display: none;
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+           margin-left: auto;
+  margin-right: auto;
+            width: 100%;
+        }
+
+        #myTable td,
+        #myTable th {
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+        }
+
+        #myTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #myTable tr:hover {
+            background-color: #ddd;
+        }
+
+        #myTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4caf50;
+            color: white;
+        }
+
+        #result {
+            color: #f44336;
+        }
     </style>
 </head>
+
 <body>
     <h2>Check Profit</h2>
     <form id="numberForm">
-        <label for="num1">Proboo:</label>
-        <input type="number" step="0.01" id="num1" placeholder="e.g., 1.2, 4.8" required><br><br>
-
-        <label for="num2">Guruu:</label>
-        <input type="number" id="num2" placeholder="e.g., 120, 540" required><br><br>
-
-        <label for="num3">Max Profit:</label>
-        <input type="number" value="3000" id="num3" placeholder="Enter a number" required><br><br>
-
+        <div class='form-input'>
+            <input type="number" step="0.01" id="num1" placeholder="Probo  e.g., 1.2, 4.8" required><br><br>
+            <input type="number" id="num2" placeholder="Line e.g., 120, 540" required><br><br>
+            <input type="number" value="3000" id="num3" placeholder="Enter a number" required><br><br>
+        </div>
         <button type="button" id="calculateButton">Submit</button>
 
         <button type="button" id="clearButton">Clear</button>
     </form>
-
-    <div id="result"></div>
+    <div id="outcome"></div>
+    <div id='result'></div>
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Qty</th>
+                <th>Amt.</th>
+                <th>PP</th>
+                <th>LP</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 
     <script>
         document.getElementById('calculateButton').addEventListener('click', function () {
-        const r = parseFloat(document.getElementById('num1').value);
-        const p2return = parseFloat(document.getElementById('num2').value);
-        const profit_wanna = parseFloat(document.getElementById('num3').value);
-        var q = 1000;
-        var c = 0.85;
-        function cal_p1_return(r, q) {
-          const p = (10 - r) * q * c;
-          return p;
-        }
-        function cal_p2_return(p2return, amt) {
-          return p2return * (amt / 1000);
-        }
-        let k = 0;
-        // Clear the existing result content
-        document.getElementById('result').innerHTML = '';
-
-        for (let amt = 1000; amt <= 50000; amt = amt + 500) {
-          let pp1 = 0;
-          let pp2 = 0;
-          let pl1 = 0;
-          let pl2 = 0;
-          let profitA = 0;
-          let profitQ = 0;
-          pp2 = cal_p2_return(p2return, amt);
-          pl2 = amt;
-          for (let qty = 1000; qty <= 10000; qty = qty + 500) {
-            pl1 = qty * r;
-            pp1 = cal_p1_return(r, qty);
-            profitQ = parseInt(pp2 - pl1);
-            profitA = parseInt(pp1 - pl2);
-
-            if (profitQ > profit_wanna && profitA > profit_wanna) {
-              k = k + 1;
-              let str = `${k}) Q:  ${qty} A: ${amt} PP: ${profitQ} LP: ${profitA}`;
-              const p = document.createElement('p');
-              p.textContent = str;
-              document.getElementById('result').appendChild(p);
+            const r = parseFloat(document.getElementById('num1').value);
+            const p2return = parseFloat(document.getElementById('num2').value);
+            const profit_wanna = parseFloat(document.getElementById('num3').value);
+            var q = 1000;
+            var c = 0.85;
+            function cal_p1_return(r, q) {
+                const p = (10 - r) * q * c;
+                return p;
             }
-          }
-        }
-      });
+            function cal_p2_return(p2return, amt) {
+                return p2return * (amt / 1000);
+            }
+            let k = 0;
+            let maxPP = 0;
+            let maxLP = 0;
+            // Clear the existing result content
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('myTable').getElementsByTagName('tbody')[0].innerHTML = ''
+            for (let amt = 1000; amt <= 50000; amt = amt + 500) {
+                let pp1 = 0;
+                let pp2 = 0;
+                let pl1 = 0;
+                let pl2 = 0;
+                let profitA = 0;
+                let profitQ = 0;
+                pp2 = cal_p2_return(p2return, amt);
+                pl2 = amt;
+                for (let qty = 1000; qty <= 10000; qty = qty + 500) {
+                    pl1 = qty * r;
+                    pp1 = cal_p1_return(r, qty);
+                    profitQ = parseInt(pp2 - pl1);
+                    profitA = parseInt(pp1 - pl2);
 
-      // Clear the first two input fields
-      document.getElementById('clearButton').addEventListener('click', function () {
-        document.getElementById('num1').value = '';
-        document.getElementById('num2').value = '';
-        document.getElementById('result').innerHTML = '';
-      });
+                    if (profitQ > profit_wanna && profitA > profit_wanna) {
+                        k = k + 1;
+                        let shortAmt = amt / 1000;
+                        const p1 = document.createElement('span');
+                        if (maxPP < profitQ) maxPP = profitQ;
+                        if (maxLP < profitA) maxLP = profitA;
+                        let myTable = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+
+                        let row = myTable.insertRow();
+                        let cell1 = row.insertCell(0);
+                        let cell2 = row.insertCell(1);
+                        let cell3 = row.insertCell(2);
+                        let cell4 = row.insertCell(3);
+                        let cell5 = row.insertCell(4);
+
+                        cell1.innerHTML = k;
+                        cell2.innerHTML = qty;
+                        cell3.innerHTML = shortAmt + 'k';
+                        cell4.innerHTML = profitQ;
+                        cell5.innerHTML = profitA;
+                    }
+
+                }
+            }
+            if (k === 0) {
+                let str = 'No Results';
+                const p = document.createElement('p');
+                p.textContent = str;
+                document.getElementById('result').appendChild(p);
+            } else {
+                document.getElementById("myTable").style.display = 'block';
+                let str = `<b>${k}</b> Possibilties, Max PP <b>${maxPP}</b>, Max LP <b>${maxLP}</b>`;
+                const outcome = document.getElementById('outcome');
+                outcome.innerHTML = '';
+                const p = document.createElement('p');
+                p.innerHTML = str;
+                outcome.appendChild(p);
+            }
+        });
+
+        // Clear the first two input fields
+        document.getElementById('clearButton').addEventListener('click', function () {
+            document.getElementById("myTable").style.display = 'none';
+            document.getElementById('num1').value = '';
+            document.getElementById('num2').value = '';
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('outcome').innerHTML = '';
+            document.getElementById('myTable').getElementsByTagName('tbody')[0].innerHTML = '';
+        });
     </script>
 </body>
+
 </html>
